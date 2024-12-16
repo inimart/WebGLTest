@@ -110,6 +110,7 @@
         createUnityInstance(canvas, config, (progress) => {
           document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
               }).then((unityInstance) => {
+                window.unityInstance = instance;
                 document.querySelector("#unity-loading-bar").style.display = "none";
                 document.querySelector("#unity-fullscreen-button").onclick = () => {
                   unityInstance.SetFullscreen(1);
@@ -130,21 +131,21 @@
     </button>
 
     <script>
-    function waitForUnity(callback) {
-      if (window.unityInstance) {
-          callback();
-      } else {
-          setTimeout(function() { waitForUnity(callback); }, 100);
+      function waitForUnity(callback) {
+          if (window.unityInstance) {
+              callback();
+          } else {
+              setTimeout(function() { waitForUnity(callback); }, 100);
+          }
       }
-    }
 
-    function changeColor() {
-      waitForUnity(function() {
-          unityInstance.SendMessage('Cube', 'ChangeColor');
-      });
-    }
+      function changeColor() {
+          waitForUnity(function() {
+              window.unityInstance.SendMessage('Cube', 'ChangeColor');
+          });
+      }
 
-    document.getElementById('colorButton').addEventListener('click', changeColor);
+      document.getElementById('colorButton').addEventListener('click', changeColor);
     </script>
   </body>
 </html>
