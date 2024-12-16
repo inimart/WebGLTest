@@ -123,5 +123,18 @@
       document.body.appendChild(script);
 
     </script>
+
+
+    <button id="colorButton" style="position: fixed; top: 20px; left: 20px; padding: 10px; cursor: pointer;">
+      Change Color
+    </button>
+
+    <script>
+    function changeColor() {
+      unityInstance.SendMessage('Cube', 'ChangeColor');
+    }
+
+    document.getElementById('colorButton').addEventListener('click', changeColor);
+    </script>
   </body>
 </html>
