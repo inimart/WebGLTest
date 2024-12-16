@@ -130,8 +130,18 @@
     </button>
 
     <script>
+    function waitForUnity(callback) {
+      if (window.unityInstance) {
+          callback();
+      } else {
+          setTimeout(function() { waitForUnity(callback); }, 100);
+      }
+    }
+
     function changeColor() {
-      unityInstance.SendMessage('Cube', 'ChangeColor');
+      waitForUnity(function() {
+          unityInstance.SendMessage('Cube', 'ChangeColor');
+      });
     }
 
     document.getElementById('colorButton').addEventListener('click', changeColor);
